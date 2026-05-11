@@ -35,4 +35,16 @@ class MessagesController extends Controller
             'data' => $message
         ]);
     }
+
+    public function show(int $id)
+    {
+        $message = Message::find($id);
+
+        return response()->json([
+            'success' => true,
+            'message'=> 'Berhasil mengambil pesan',
+            'data' => $message
+        ]);
+
+    }
 }
