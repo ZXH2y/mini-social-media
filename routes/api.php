@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\LikesController;
-
+use App\Http\Controllers\MessagesController;
 
 //  ini mi dibawa dibilang API dongo!!!!
 Route::get('/user', function (Request $request) {
@@ -35,6 +35,13 @@ Route::prefix('/v1')->group(function(){
     Route::prefix('likes')->group(function(){
         Route::post('/', [LikesController::class, 'store']); // Like komentar baru
         Route::delete('{id}', [LikesController::class, 'destroy']); // Menghapus like
+    });
+
+    // Menghandle Message
+    Route::prefix('messages')->group(function(){
+        Route::post('/', [MessagesController::class, 'store']); // kirim pesan
+        Route::get('{id}', [MessagesController::class, 'show']); // melihat pesan by id
+        Route::delete('{id}', [MessagesController::class, 'destroy']); // menghapus pesan
     });
 });
 
