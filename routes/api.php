@@ -3,7 +3,7 @@
 use App\Http\Controllers\PostsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CommentsController;
 
 //  ini mi dibawa dibilang API dongo!!!!
 Route::get('/user', function (Request $request) {
@@ -19,6 +19,15 @@ Route::prefix('/v1')->group(function(){
         Route::get('{id}', [PostsController::class, 'show']); // mengambil detail data by id
         Route::put('{id}', [PostsController::class, 'update']); // mengupdate data
         Route::delete('{id}', [PostsController::class, 'destroy']);  // menghapus data.
+
+    });
+
+
+    // mengandle comments
+    Route::prefix('comments')->group(function(){
+        Route::post('/', [CommentsController::class, 'store']); // simpan komentar baru
+        Route::delete('{id}', [CommentsController::class, 'destroy']); // Menghapus komentar
+        
 
     });
 });
