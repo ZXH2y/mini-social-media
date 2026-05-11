@@ -33,7 +33,7 @@ class CommentsController extends Controller
                 'success' => true,
                 'message' => 'Berhasil Membuat komentar baru',
                 'data' => $comment
-            ]);
+            ],201);
         }
         public function destroy($id){
             Comment::destroy($id);
