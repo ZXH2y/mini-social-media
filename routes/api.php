@@ -4,6 +4,7 @@ use App\Http\Controllers\PostsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\MessagesController;
 
@@ -13,6 +14,9 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::prefix('/v1')->group(function(){
+
+    // handle auth
+    Route::post('reqister', [JWTAuthController::class, 'register']);
 
     // menghandle posts
     Route::prefix('posts')->group(function(){
@@ -44,6 +48,12 @@ Route::prefix('/v1')->group(function(){
         Route::delete('{id}', [MessagesController::class, 'destroy']); // menghapus pesan
         Route::get('getMessages/{user_id}', [MessagesController::class, 'getMessages']); // melihat pesan pesan masuk berdasakan user id
     });
+
+    // Belajar JWT, jsin web token
+    // command: 
+    // composer require tymon/jwt-auth
+    // php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+    // php artisan jwt:secret
 });
 
 
