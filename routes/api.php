@@ -42,6 +42,7 @@ Route::prefix('/v1')->group(function(){
         Route::post('/', [MessagesController::class, 'store']); // kirim pesan
         Route::get('{id}', [MessagesController::class, 'show']); // melihat pesan by id
         Route::delete('{id}', [MessagesController::class, 'destroy']); // menghapus pesan
+        Route::get('getMessages/{user_id}', [MessagesController::class, 'getMessages']); // melihat pesan pesan masuk berdasakan user id
     });
 });
 
