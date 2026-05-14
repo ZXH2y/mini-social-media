@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Like;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LikesController extends Controller
 {
     public function store(Request $request)
     {
+
+        $user = JWTAuth::parseToken()->authenticate();
+
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
             'post_id' => 'required',
         ]);
 
@@ -23,7 +26,7 @@ class LikesController extends Controller
         }
 
         $like = Like::create([
-            'user_id' => $request->user_id,
+            'user_id' => $user->id,
             'post_id' => $request->post_id,
         ]);
 
