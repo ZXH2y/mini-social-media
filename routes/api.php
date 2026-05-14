@@ -9,14 +9,12 @@ use App\Http\Controllers\LikesController;
 use App\Http\Controllers\MessagesController;
 
 //  ini mi dibawa dibilang API dongo!!!!
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
 Route::prefix('/v1')->group(function(){
 
     // handle auth
     Route::post('reqister', [JWTAuthController::class, 'register']);
+    Route::post('login', [JWTAuthController::class, 'login']);
 
     // menghandle posts
     Route::prefix('posts')->group(function(){
