@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\MessagesController;
+use App\Http\Middleware\JWTMiddleware;
 
 //  ini mi dibawa dibilang API dongo!!!!
 
@@ -17,7 +18,7 @@ Route::prefix('/v1')->group(function(){
     Route::post('login', [JWTAuthController::class, 'login']);
 
     // menghandle posts
-    Route::prefix('posts')->group(function(){
+    Route::middleware(JWTMiddleware::class)->prefix('posts')->group(function(){
         Route::get('/', [PostsController::class, 'index']);// mengambil semua data.
         Route::post('/', [PostsController::class, 'store']); // menyimpan data.
         Route::get('{id}', [PostsController::class, 'show']); // mengambil detail data by id
@@ -28,19 +29,19 @@ Route::prefix('/v1')->group(function(){
 
 
     // mengandle comments
-    Route::prefix('comments')->group(function(){
+    Route::middleware(JWTMiddleware::class)->prefix('comments')->group(function(){
         Route::post('/', [CommentsController::class, 'store']); // simpan komentar baru
         Route::delete('{id}', [CommentsController::class, 'destroy']); // Menghapus komentar
     });
 
     // handle API like
-    Route::prefix('likes')->group(function(){
+    Route::middleware(JWTMiddleware::class)->prefix('likes')->group(function(){
         Route::post('/', [LikesController::class, 'store']); // Like komentar baru
         Route::delete('{id}', [LikesController::class, 'destroy']); // Menghapus like
     });
 
     // Menghandle Message
-    Route::prefix('messages')->group(function(){
+    Route::middleware(JWTMiddleware::class)->prefix('messages')->group(function(){
         Route::post('/', [MessagesController::class, 'store']); // kirim pesan
         Route::get('{id}', [MessagesController::class, 'show']); // melihat pesan by id
         Route::delete('{id}', [MessagesController::class, 'destroy']); // menghapus pesan
